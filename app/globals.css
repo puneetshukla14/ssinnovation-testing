@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+/* === Root Theme Variables === */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans, Arial, sans-serif);
+  --font-mono: var(--font-geist-mono, monospace);
+}
+
+/* === Dark Mode Overrides === */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* === Global Styles === */
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* === Starfield Background Animation === */
+.starfield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: transparent url('/stars.png') repeat;
+  animation: starScroll 100s linear infinite;
+  z-index: 0;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+@keyframes starScroll {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* === Utility Fixes === */
+* {
+  box-sizing: border-box;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+/* global.css */
+.header-bg-expand {
+  transition: all 0.3s ease-in-out;
+}
+
+.group:hover .group-hover\:h-auto {
+  height: auto !important;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.group-hover\:h-0 {
+  height: 0 !important;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.bg-black {
+  background-color: black;
+}
+
+.text-white {
+  color: white;
+}
+
