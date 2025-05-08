@@ -12,12 +12,20 @@ const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);  // Track the hovered menu item
   const headerRef = useRef<HTMLElement | null>(null);
+  const [hidden, setHidden] = useState(false); // Track header visibility
+  const lastScrollY = useRef(0);
 
-  const handleScroll = () => {
-    setSticky(window.scrollY > 50);
-  };
 
   useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY.current) {
+        setHidden(true); // Hide header when scrolling down
+      } else {
+        setHidden(false); // Show header when scrolling up
+      }
+      lastScrollY.current = window.scrollY;
+    };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -31,6 +39,7 @@ const Header = () => {
         { label: 'SSi Maya', href: '/ssi-maya' },
         { label: 'SSi Yantra', href: '/ssi-yantra' },
         { label: 'SSi Sutra', href: '/ssi-sutra' },
+        
       ],
     },
     {
@@ -74,9 +83,9 @@ const Header = () => {
 
   return (
     <motion.header
-      ref={headerRef}
       initial={false}
       animate={{
+        y: hidden ? -100 : 0, // Moves header off-screen when hidden
         height: activeDropdown ? 310 : sticky ? 78 : 78,
         backgroundColor: 'black',
         backdropFilter: 'none',
@@ -97,19 +106,28 @@ const Header = () => {
               key={index}
               className="relative group"
               onMouseEnter={() => item.subItems && handleMouseEnter(item.title)}
+              style={{fontFamily:"sans-serif"}}
             >
-              {item.href ? (
+              {item.href ? (  
                 <Link
                   href={item.href}
                   className={`group relative text-white transition hover:text-blue-400 ${hoveredMenu && hoveredMenu !== item.title ? 'opacity-50' : ''}`}
+                  style={{ fontFamily: "'Bebas Neue', sans-serif"
+
+                   }}
+                   
+
                 >
                   {item.title}
                   <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               ) : (
+
+
+              
                 <button className={`group relative flex items-center gap-2 text-white transition hover:text-blue-400 ${hoveredMenu && hoveredMenu !== item.title ? 'opacity-50' : ''}`}>
                   {item.title} <FaChevronDown size={12} />
-                  <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute left-[-2] -bottom-1 h-[2px] w-0 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
                 </button>
               )}
 
@@ -121,11 +139,12 @@ const Header = () => {
                   transition={{ duration: 0.3 }}
                   onMouseEnter={() => setActiveDropdown(activeDropdown)}
                 >
+                  
                   <ul className="space-y-2 p-3 relative">
                     <motion.div
                       className="absolute top-0 left-[-0px] w-[2px]"
-                      style={{
-                        background: 'linear-gradient(to bottom, white, rgba(255, 255, 255, 0))',
+                      style={{ 
+                        background: 'linear-gradient(to bottom, white, rgb(0, 0, 0)) rounded curve 20px',
                       }}
                       initial={{ height: 100 }}
                       animate={{

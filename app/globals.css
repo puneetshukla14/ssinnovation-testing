@@ -1,4 +1,12 @@
 @import "tailwindcss";
+/* styles/globals.css or styles/index.css */
+/* Place @import at the very top of your CSS file */
+
+/* Your other styles go here */
+
+
+/* Now, you can use it in your Tailwind classes or custom styles */
+
 
 /* === Root Theme Variables === */
 :root {
@@ -92,3 +100,30 @@ video {
   color: white;
 }
 
+@keyframes glow {
+  0%, 100% {
+    border-color: rgba(0, 255, 255, 0.4);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+  }
+  50% {
+    border-color: rgba(0, 255, 255, 0.8);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  }
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes scroll-x {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-x {
+  animation: scroll-x linear infinite;
+}
